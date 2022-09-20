@@ -1,0 +1,196 @@
+<!DOCTYPE html> <html lang="zh-CN" dir="ltr"> <head> <meta charset="UTF-8"> <!-- SEO --> <title>初次见面，请多指教！ - Handie</title> <!-- 页面渲染兼容性 --> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <meta name="renderer" content="webkit"> <meta name="viewport" content="width=device-width,initial-scale=1.0"> <!-- 站点 icon --> <link rel="icon" href="/assets/favicon-3e749ca030e3b71eb2662d947c789061d2da9e0f4ee5f3360cfa9ccbe053c8ba.ico"> <!-- 静态资源 --> <link type="text/css" rel="stylesheet" href="/assets/global-6d3852a99ac227d691ae6086451eae5d8a7c5e3c8faf090c96cf7a20bca04b1d.css"> <link type="text/css" rel="stylesheet" href="/assets/share-2811f36e337fef8021089414f657904b7e88db17d8ecade0688c8c3f5e632a5c.css"> <link type="text/css" rel="stylesheet" href="/assets/pages/post-e81e7d6592f92970c97642e26e18867c0bc2e4291bc2dd0c8e438e8c51d3f3b8.css"> <script type="text/javascript" src="/assets/global-b3a80dd53acf48ad7228d6fd741dba15d3845cbc3783bdbbf7244151a45628aa.js"></script> </head> <body class="Page" itemscope itemtype="http://schema.org/WebPage"> <header class="Page-header"> <div class="navbar navbar-static-top"> <div class="container"> <div class="navbar-header"> <button class="navbar-toggle collapsed" type="button" data-target=".Page-navs" data-toggle="collapse"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a href="/" class="navbar-brand" title="回到首页">Handie</a> </div> <!-- 导航 --> <nav class="Page-navs navbar-collapse collapse"> <ul class="nav navbar-nav"> <li><a href="/guides/">指南</a></li> <!-- <li><a href="/kit/">套件</a></li> --> </ul> </nav> </div> </div> </header> <main class="Page-content"> <div class="container"> <article class="Page-main Article"> <header class="Article-header"> <h1 class="Article-title">初次见面，请多指教！</h1> </header> <div class="Article-content col-md-9"><p>「Handie」读作「ˈhændɪ」，源于「handy」，是一个尽可能地帮你把 CRUD 相关页面「配」出来而不是「写」出来的<strong>渐进式配置驱动企业级中后台前端应用开发框架</strong>。</p> <p>本框架的核心目的是让业务开发者将关注点聚焦于业务本身而非技术细节，因此会搭配一系列封装好的中后台前端应用开发的基础设施，用相对简单的方式完成以往较为繁琐的工作。</p> <p>虽然有一些推荐的思想、规范，但对于使用 Handie 来说并不是强制性的，故而可以在现有项目的基础上逐步迁移，而不用一下子伤筋动骨地大改。</p> <h2 id="section">起步</h2> <p>总的来说，Handie 的核心是平台无关的，但视图结构的渲染不可避免地依赖于 React、Vue 等视图库/框架，因而在它们的基础上进行了一定的封装与适配，从而形成了 <a href="https://github.com/handiejs/handie-react"><code>handie-react</code></a>、<a href="https://github.com/handiejs/handie-vue"><code>handie-vue</code></a> 等与具体视图库/框架绑定的「壳」。</p> <p>为了方便说明，整个教程将基于 <code>handie-vue</code> 进行讲解。虽说如此，就算用 <code>handie-react</code> 或其他的「壳」，使用方式别无二致，无需担心。</p> <h3 id="section-1">前置知识</h3> <p>Handie 已经尽力去屏蔽一些底层技术的细节，也就是说，很理想的状况下只需要会一点 <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript">JavaScript</a> 相关知识就可以了。</p> <p>然而，现实总是残酷的，实际面对的情景很可能是需求方不按套路出牌，界面的设计特殊化，这时就要根据选择而去了解些 <a href="https://reactjs.org/">React</a>、<a href="https://vuejs.org/">Vue</a> 及 <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML">HTML</a>、<a href="https://developer.mozilla.org/en-US/docs/Learn/CSS">CSS</a> 等知识了。</p> <h3 id="section-2">准备工作</h3> <p>考虑到让 Handie 尽量轻量化，它只提供了使中后台前端应用能够配置化开发的底层能力而不内置任何资源型的「物料」，这些通过引入额外的 NPM 包来解决，比如<a href="https://www.yuque.com/handie/cookbook/qo4k0r"><strong>部件</strong></a>包 <a href="https://github.com/handiejs/bulbasaur"><code>@handie/bulbasaur</code></a>：</p> <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>npm i -S handie-vue @handie/bulbasaur</code></pre></figure> <p>由于部件包中基于 <a href="https://petals.fxxk.design/">Petals</a> 采用<strong>基于接口编程</strong>的方式使用 UI 组件，不依赖任何具体的 UI 组件库，所以需要另外安装自己喜欢的 UI 组件库及相应的适配包。</p> <p>以 <a href="https://element.eleme.cn/">Element</a> 为例：</p> <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>npm i -S element-ui @kokiri/element</code></pre></figure> <p>在关键依赖都安装好之后，需将作为<a href="https://www.yuque.com/handie/cookbook/qo4k0r"><strong>控件</strong></a>的 UI 组件注册进系统，上面提到的 <code>@handie/bulbasaur</code> 才能正常运行——</p> <p>为了兼容 ES Modules 的使用方式，首先要在项目的基础组件入口文件（如 <code>src/components/index.ts</code>）中把已安装的 UI 组件暴露出去。</p> <p>需要注意的是，如无必要，暴露的是适配包中的而不是直接暴露 UI 组件库中的：</p> <figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="c1">// 导出全部</span>
+<span class="k">export</span> <span class="o">*</span> <span class="kr">from</span> <span class="s1">&#39;@kokiri/element&#39;</span><span class="p">;</span>
+
+<span class="c1">// 或仅导出用到的</span>
+<span class="c1">// export { Button, TextInput, TextArea, Select, Option } from &#39;@kokiri/element&#39;;</span></code></pre></figure> <p>然后，在项目入口文件（如 <code>src/main.ts</code>）中引入要被注册的 UI 组件：</p> <figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="k">import</span> <span class="p">{</span> <span class="nx">ComponentType</span><span class="p">,</span> <span class="nx">ComponentCtor</span><span class="p">,</span> <span class="nx">ComponentDescriptor</span><span class="p">,</span> <span class="nx">registerComponent</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;handie-vue&#39;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">renderers</span> <span class="kr">from</span> <span class="s1">&#39;handie-vue/dist/renderers&#39;</span><span class="p">;</span> <span class="c1">// 渲染器</span>
+<span class="k">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">controls</span> <span class="kr">from</span> <span class="s1">&#39;./components&#39;</span><span class="p">;</span> <span class="c1">// 控件</span>
+<span class="k">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">widgets</span> <span class="kr">from</span> <span class="s1">&#39;@handie/bulbasaur&#39;</span><span class="p">;</span> <span class="c1">// 部件</span>
+
+<span class="kd">function</span> <span class="nx">convertToDescriptors</span><span class="p">(</span>
+  <span class="nx">map</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">ComponentCtor</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">type</span><span class="o">:</span> <span class="nx">ComponentType</span> <span class="o">=</span> <span class="s1">&#39;control&#39;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span> <span class="nx">ComponentDescriptor</span><span class="p">[]</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">map</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">name</span> <span class="p">=&gt;</span> <span class="p">({</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">ctor</span><span class="o">:</span> <span class="nx">map</span><span class="p">[</span><span class="nx">name</span><span class="p">],</span> <span class="nx">type</span> <span class="p">}));</span>
+<span class="p">}</span>
+
+<span class="p">([]</span> <span class="kr">as</span> <span class="nx">ComponentDescriptor</span><span class="p">[])</span>
+  <span class="p">.</span><span class="nx">concat</span><span class="p">(</span>
+    <span class="nx">convertToDescriptors</span><span class="p">(</span><span class="nx">controls</span><span class="p">),</span>
+    <span class="nx">convertToDescriptors</span><span class="p">(</span><span class="nx">widgets</span><span class="p">,</span> <span class="s1">&#39;widget&#39;</span><span class="p">),</span>
+    <span class="nx">convertToDescriptors</span><span class="p">(</span><span class="nx">renderers</span><span class="p">,</span> <span class="s1">&#39;renderer&#39;</span><span class="p">),</span>
+  <span class="p">)</span>
+  <span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">descriptor</span> <span class="p">=&gt;</span> <span class="nx">registerComponent</span><span class="p">(</span><span class="nx">descriptor</span><span class="p">));</span></code></pre></figure> <p>至此，准备工作已经做好，可以开始体验配置化开发啦！</p> <h2 id="section-3">「配」个页面出来</h2> <p>中后台系统的模式特征特别强，为了复用和简化开发，一些国内的 UI 组件库会另外提供更大粒度的用来支撑表格页、表单页等开发的 UI 组件，即所谓的「Pro」。</p> <p>Handie 就是 <a href="https://fxxk.design/">Fxxk Design</a> 或者说 Petals 在中后台场景的配套设施。</p> <h3 id="section-4">表格页</h3> <p>在大部分中后台前端应用中，要开发个表格页，代码大概是这样：</p> <figure class="highlight"><pre><code class="language-html" data-lang="html"><span></span><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- 查询条件 --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-search&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">el-form</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-searchForm&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-form-item</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;标题&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">el-input</span> <span class="na">:value</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="err">@</span><span class="na">input</span><span class="o">=</span><span class="s">&quot;handleTitleChange&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">el-form-item</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">el-form</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-searchOperations&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;primary&quot;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;handleSearch&quot;</span><span class="p">&gt;</span>查询<span class="p">&lt;/</span><span class="nt">el-button</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;handleReset&quot;</span><span class="p">&gt;</span>重置<span class="p">&lt;/</span><span class="nt">el-button</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- 表格行外操作 --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-operations&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">el-button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;primary&quot;</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;handleCreate&quot;</span><span class="p">&gt;</span>新增<span class="p">&lt;/</span><span class="nt">el-button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- 数据展示 --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-data&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">el-table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-table&quot;</span> <span class="na">:data</span><span class="o">=</span><span class="s">&quot;tableData&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-table-column</span> <span class="na">prop</span><span class="o">=</span><span class="s">&quot;title&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;标题&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-table-column</span> <span class="na">prop</span><span class="o">=</span><span class="s">&quot;description&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;简介&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-table-column</span> <span class="na">prop</span><span class="o">=</span><span class="s">&quot;episodes&quot;</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;集数&quot;</span> <span class="p">/&gt;</span>
+        <span class="c">&lt;!-- 表格行内操作 --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">el-table-column</span> <span class="na">label</span><span class="o">=</span><span class="s">&quot;操作&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">div</span> <span class="na">slot-scope</span><span class="o">=</span><span class="s">&quot;{ row }&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">el-button</span> <span class="err">@</span><span class="na">click</span><span class="o">=</span><span class="s">&quot;handleEdit(row)&quot;</span><span class="p">&gt;</span>编辑<span class="p">&lt;/</span><span class="nt">el-button</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">el-table-column</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">el-table</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">el-pagination</span>
+        <span class="na">class</span><span class="o">=</span><span class="s">&quot;AnimationListView-pagination&quot;</span>
+        <span class="na">:page-size</span><span class="o">=</span><span class="s">&quot;pageSize&quot;</span>
+        <span class="na">:current-page</span><span class="o">=</span><span class="s">&quot;pageNumber&quot;</span>
+        <span class="na">:total</span><span class="o">=</span><span class="s">&quot;total&quot;</span>
+        <span class="err">@</span><span class="na">size-change</span><span class="o">=</span><span class="s">&quot;handlePageSizeChange&quot;</span>
+        <span class="err">@</span><span class="na">current-change</span><span class="o">=</span><span class="s">&quot;handlePageNumberChange&quot;</span>
+      <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;ts&quot;</span><span class="p">&gt;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Vue</span><span class="p">,</span> <span class="nx">Component</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;vue-property-decorator&#39;</span><span class="p">;</span>
+
+<span class="err">@</span><span class="nx">Component</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">AnimationListView</span> <span class="k">extends</span> <span class="nx">Vue</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="nx">tableData</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="kr">private</span> <span class="nx">title</span><span class="o">:</span> <span class="nx">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+  <span class="kr">private</span> <span class="nx">pageSize</span><span class="o">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mf">20</span><span class="p">;</span>
+  <span class="kr">private</span> <span class="nx">pageNumber</span><span class="o">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mf">1</span><span class="p">;</span>
+  <span class="kr">private</span> <span class="nx">total</span><span class="o">:</span> <span class="nx">number</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span>
+
+  <span class="kr">private</span> <span class="k">async</span> <span class="nx">getList</span><span class="p">()</span><span class="o">:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c1">// 发起获取列表数据的请求</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handleTitleChange</span><span class="p">(</span><span class="nx">value</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handleSearch</span><span class="p">()</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getList</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handleReset</span><span class="p">()</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">getList</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handlePageSizeChange</span><span class="p">(</span><span class="nx">pageSize</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">pageSize</span> <span class="o">=</span> <span class="nx">pageSize</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">getList</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handlePageNumberChange</span><span class="p">(</span><span class="nx">pageNumber</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">pageNumber</span> <span class="o">=</span> <span class="nx">pageNumber</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">getList</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handleCreate</span><span class="p">()</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;AnimationNewForm&#39;</span> <span class="p">})</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">handleEdit</span><span class="p">(</span><span class="nx">record</span><span class="o">:</span> <span class="nx">Record</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span><span class="p">)</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;AnimationEditForm&#39;</span><span class="p">,</span> <span class="nx">params</span><span class="o">:</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="nx">record</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kr">private</span> <span class="nx">created</span><span class="p">()</span><span class="o">:</span> <span class="ow">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getList</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;scss&quot;</span> <span class="na">scoped</span><span class="p">&gt;</span>
+<span class="p">.</span><span class="nc">AnimationListView</span> <span class="p">{</span>
+  <span class="err">//</span> <span class="err">样式规则集</span>
+<span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span></code></pre></figure> <p>上面的示例代码，可以说是最简功能的最小实现了，省去了很多细节没写。即便如此，仍然「写」了百余行……</p> <p>下面借助于 Handie 的能力「配」一个具有相同功能的表格页：</p> <figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="k">import</span> <span class="p">{</span> <span class="nx">ObjectViewContext</span><span class="p">,</span> <span class="nx">createView</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;handie-vue&#39;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="nx">context</span> <span class="kr">from</span> <span class="s1">&#39;../context&#39;</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createView</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;AnimationListView&#39;</span><span class="p">,</span>
+  <span class="nx">category</span><span class="o">:</span> <span class="s1">&#39;list&#39;</span><span class="p">,</span>
+  <span class="nx">renderType</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+  <span class="c1">// 数据列</span>
+  <span class="nx">fields</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;标题&#39;</span><span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;string&#39;</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;简介&#39;</span><span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;text&#39;</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;episodes&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;集数&#39;</span><span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;int&#39;</span> <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="c1">// 操作按钮</span>
+  <span class="nx">actions</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;新增&#39;</span><span class="p">,</span>
+      <span class="nx">context</span><span class="o">:</span> <span class="s1">&#39;free&#39;</span><span class="p">,</span>
+      <span class="nx">primary</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nx">execute</span><span class="o">:</span> <span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">vm</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;AnimationNewForm&#39;</span> <span class="p">}),</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;编辑&#39;</span><span class="p">,</span>
+      <span class="nx">execute</span><span class="o">:</span> <span class="p">(</span><span class="nx">context</span><span class="o">:</span> <span class="nx">ObjectViewContext</span><span class="p">,</span> <span class="nx">vm</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="nx">vm</span><span class="p">.</span><span class="nx">$router</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+          <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;AnimationEditForm&#39;</span><span class="p">,</span>
+          <span class="nx">params</span><span class="o">:</span> <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="nx">context</span><span class="p">.</span><span class="nx">getFieldValue</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="p">},</span>
+        <span class="p">}),</span>
+    <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="c1">// 查询条件</span>
+  <span class="nx">search</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">filters</span><span class="o">:</span> <span class="p">[{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;标题&#39;</span> <span class="p">}],</span>
+  <span class="p">},</span>
+<span class="p">});</span></code></pre></figure> <p>通过对比应该可以明显地感受到，下面的代码比上面的减少了很多信息噪音，能够很清晰地看出这个页面都显示哪些字段，有什么操作和查询条件等。</p> <h3 id="section-5">表单页</h3> <p>如果要「写」出来一个表单页，代码量会比表格页多很多，限于篇幅就不写具体示例了。而要「配」一个表单页，其代码量与表格页比较相近，甚至更少：</p> <figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="k">import</span> <span class="p">{</span> <span class="nx">createView</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;handie-vue&#39;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="nx">context</span> <span class="kr">from</span> <span class="s1">&#39;../context&#39;</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createView</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;AnimationFormView&#39;</span><span class="p">,</span>
+  <span class="nx">category</span><span class="o">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+  <span class="nx">renderType</span><span class="o">:</span> <span class="s1">&#39;form&#39;</span><span class="p">,</span>
+  <span class="nx">fields</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;标题&#39;</span><span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;string&#39;</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;简介&#39;</span><span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;text&#39;</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;episodes&#39;</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="s1">&#39;集数&#39;</span><span class="p">,</span> <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;int&#39;</span> <span class="p">},</span>
+  <span class="p">],</span>
+<span class="p">});</span></code></pre></figure> <h2 id="section-6">业务向的模块系统</h2> <p>除了配置化开发，Handie 的另一大特色就是针对业务的模块化开发。</p> <h3 id="section-7">自造的缘由</h3> <p>也许你会疑问：「JavaScript 不是已经有了语言级别的模块系统 ES Modules 了吗？为啥还要自己搞一套？」</p> <p>ES Modules 是基于文件（路径）的，确定性很高，因此可以在编译时做静态分析等事情。</p> <p>然而，正是因为这种确定性，当我们想要在运行时动态替换既有应用中的某个部分时，要么无法做到，要么成本很高，比如：无缝切换数据源或 UI 组件库。</p> <p>另外，也由于 ES Modules 是基于文件（路径）的，不具备业务语义，并且不能对业务方面的依赖做约束。使用 Handie 内置的模块系统配合模块内的 ES Modules 引用规则，可以从业务角度进行更加严格的模块依赖管控。</p> <h3 id="section-8">模块描述器</h3> <p>所谓的「模块描述器」就是一个 JavaScript 对象，通过它可以了解到当前模块依赖于哪些业务模块和控件，以及有哪些资源可被外部模块使用：</p> <figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="k">import</span> <span class="p">{</span> <span class="nx">ModuleDescriptor</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;handie-vue&#39;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AnimationList</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./widgets&#39;</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="c1">// 模块名，需要全局唯一</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;animation&#39;</span><span class="p">,</span>
+  <span class="c1">// 所依赖的其他模块的资源</span>
+  <span class="nx">imports</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;genre.services.getList&#39;</span><span class="p">],</span>
+  <span class="c1">// 提供给外部模块使用的资源</span>
+  <span class="nx">exports</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">widgets</span><span class="o">:</span> <span class="p">{</span> <span class="nx">AnimationList</span> <span class="p">},</span>
+  <span class="p">},</span>
+  <span class="c1">// 模块内依赖的控件</span>
+  <span class="nx">components</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">XIcon</span><span class="o">:</span> <span class="s1">&#39;Icon&#39;</span><span class="p">,</span>
+    <span class="nx">XButton</span><span class="o">:</span> <span class="s1">&#39;Button&#39;</span><span class="p">,</span>
+    <span class="nx">Wait</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">Ellipsis</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">}</span> <span class="kr">as</span> <span class="nx">ModuleDescriptor</span><span class="p">;</span></code></pre></figure> <h3 id="section-9">模块上下文</h3> <p>在上文介绍配置化开发时，表格页和表单页的示例代码中有一段相同的代码：</p> <figure class="highlight"><pre><code class="language-js" data-lang="js"><span></span><span class="k">import</span> <span class="nx">context</span> <span class="kr">from</span> <span class="s1">&#39;../context&#39;</span><span class="p">;</span></code></pre></figure> <p>这里的 <code>context</code> 就是「模块上下文」——一个用来获取模块级资源的 JavaScript 对象，如：获取控件构造函数，获取依赖模块的资源，发送请求等。</p> <h2 id="section-10">准备好了吗？</h2> <p>在本篇教程中只是着重并简要地介绍下 Handie 最核心的特色功能，教程的其余部分将会详细地讲解完整机制，以及如何应对变化的业务，所以请耐心地读完全部教程！</p> </div> <footer class="Article-footer col-md-3"> <div class="Widget Widget--share"> <div class="Widget-body"> <p>分享到<i class="fa fa-share-alt"></i></p> <div class="social-share" data-sites="wechat,weibo,twitter"></div> </div> </div> <section class="Widget Widget--toc"> <div class="Widget-header"> <h2 class="Widget-title">目录</h2> </div> <div class="Widget-body"></div> </section> </footer> </article> </div> </main> <footer class="Page-footer Footer"> <div class="container"> <div class="Footer-description"> <!-- 重要链接 --> <nav class="Footer-navs"> <ul> <li><a href="https://ntks.ourai.ws/" title="访问「反混沌」" target="_blank" rel="external nofollow"><span>反混沌</span></a></li> <li><a href="https://github.com/handiejs" target="_blank" rel="external nofollow"><span>GitHub</span></a></li> </ul> </nav> <!-- 网站版权 --> <div class="Footer-copyright"> <p>&copy; 2016-2022 <a href="/">Handie</a> 版权所有</p> </div> </div> </div> </footer> <script type="text/javascript" src="/assets/share.min-3155ee636b84a04d036e0f1ba833227d3fd03a4c58a6f2e21c9ceb1c5d0198c7.js"></script><script type="text/javascript" src="/assets/components-a266f21fe1dfd61bebf40e74872cbf901eb3e201f7d33e9e5d5af9a55f4b24ea.js"></script> <script type="text/javascript" src="/assets/initializers/time-8d7a529a66ae6cb53c2283d21fd6a12c538b8473dd5bd76458366d09adce7bf6.js"></script><script type="text/javascript" src="/assets/initializers/lazyload-44b7df8a9282d598284d522e64d6be9ac88d466f3c4a734a514303e99347b2c9.js"></script> </body> </html>
