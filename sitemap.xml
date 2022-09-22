@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://handiejs.github.io/api/</loc>
+</url>
+<url>
 <loc>https://handiejs.github.io/</loc>
 </url>
 <url>
@@ -19,13 +22,25 @@
 <loc>https://handiejs.github.io/guides/intro/</loc>
 </url>
 <url>
+<loc>https://handiejs.github.io/descriptors/action/</loc>
+</url>
+<url>
 <loc>https://handiejs.github.io/descriptors/field/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/descriptors/filter/</loc>
 </url>
 <url>
 <loc>https://handiejs.github.io/descriptors/model/</loc>
 </url>
 <url>
 <loc>https://handiejs.github.io/descriptors/module/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/descriptors/search/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/descriptors/view/</loc>
 </url>
 <url>
 <loc>https://handiejs.github.io/widgets/admin-layout-structural-widget/</loc>
