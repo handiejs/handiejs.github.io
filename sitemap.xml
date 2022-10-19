@@ -129,4 +129,16 @@
 <url>
 <loc>https://handiejs.github.io/widgets/url-field-widget/</loc>
 </url>
+<url>
+<loc>https://handiejs.github.io/contexts/module-context/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/contexts/search-context/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/contexts/value-context/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/contexts/view-context/</loc>
+</url>
 </urlset>
