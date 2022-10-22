@@ -115,6 +115,12 @@
 <loc>https://handiejs.github.io/widgets/dialog-view-button-action-widget/</loc>
 </url>
 <url>
+<loc>https://handiejs.github.io/widgets/field-headless-widget/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/widgets/filter-headless-widget/</loc>
+</url>
+<url>
 <loc>https://handiejs.github.io/widgets/form-dialog-view-widget/</loc>
 </url>
 <url>
@@ -131,6 +137,9 @@
 </url>
 <url>
 <loc>https://handiejs.github.io/widgets/input-filter-widget/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/widgets/layout-headless-widget/</loc>
 </url>
 <url>
 <loc>https://handiejs.github.io/widgets/link-action-widget/</loc>
