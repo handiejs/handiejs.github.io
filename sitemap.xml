@@ -82,10 +82,16 @@
 <loc>https://handiejs.github.io/widgets/action-headless-widget/</loc>
 </url>
 <url>
+<loc>https://handiejs.github.io/widgets/action-structural-widget/</loc>
+</url>
+<url>
 <loc>https://handiejs.github.io/widgets/admin-layout-structural-widget/</loc>
 </url>
 <url>
 <loc>https://handiejs.github.io/widgets/base-headless-widget/</loc>
+</url>
+<url>
+<loc>https://handiejs.github.io/widgets/base-structural-widget/</loc>
 </url>
 <url>
 <loc>https://handiejs.github.io/widgets/button-action-widget/</loc>
